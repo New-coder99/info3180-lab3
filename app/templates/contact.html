@@ -7,28 +7,38 @@
     <h1>____________________________________________________________</h1>
     <br>
     {{ form.csrf_token }} 
-
-        <div>
-            {{ form.Name.label }} 
-            {{ form.Name }} 
+        <p>Fill in this form to contact the site owners</p>
+        <br>
+        <div id="labelsandcontent">
+            <h5 >{{ form.Name.label }} <l id="texter"> (Required)</l> </h5>
+            
+            Please enter your full name
+            <div id="div1">{{ form.Name }}</div> 
         </div>
 
-        <div>
-            {{ form.Email.label }} 
-            {{ form.Email }} 
+        <div id="labelsandcontent">
+            <br>
+            <h5 >{{ form.Email.label }} <l id="texter"> (Required)</l></h5>
+            Please enter your e-mail address
+            <div id="div1">{{ form.Email }}</div>
         </div>
 
-        <div>
-            {{ form.Subject.label }} 
-            {{ form.Subject }} 
+        <div id="labelsandcontent">
+            <br>
+            <h5 >{{ form.Subject.label }} <l id="texter"> (Required)</l></h5> 
+            Please enter the subject for your message
+            <div id="div1">{{ form.Subject }} </div>
         </div>
 
-        <div>
-            {{ form.Message.label }} 
-            {{ form.Message }} 
+        <div id="labelsandcontent">
+            <br>
+            <h5 >{{ form.Message.label }}<l id="texter"> (Required)</l></h5   > 
+            Please enter the message you would like to send
+            <div id="div3">{{ form.Message }} </div>
         </div>
-
-        <input type="submit" value="Submit">
+        
+        <br>
+        <input id="submitbtn" type="submit" value="Send">
     
     
     </form>
