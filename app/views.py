@@ -60,20 +60,28 @@ def page_not_found(error):
     """Custom 404 page."""
     return render_template('404.html'), 404
 
-@app.route("/contact/", methods=['GET', 'POST'])
+@app.route("/contact", methods=['GET', 'POST'])
 def contact():
-    form = ContactForm()
+    form1 = ContactForm()
     if request.method == 'POST':
-        name = form.Name.data
-        email = form.Email.data
-        subject = form.Subject.data
-        message = form.Message.data
-
-        msg = Message(subject, sender=({name}, {email}), recipients=[{email}])
+        name = form1.Name.data
+        email = form1.Email.data
+        subject = form1.Subject.data
+        message = form1.Message.data
+        msg = Message(subject, sender=({name}, {email}), recipients=["jzg924@gmail.com"])
         msg.body = f"Name: {name}\nEmail: {email}\nSubject: {subject}\nMessage: {message}"
         mail.send(msg)
+        try:
+            msg = Message(subject,
+                          sender=(name, email),
+                          recipients=["to@example.com"])
+            msg.body = message
+            mail.send(msg)
+            flash('Your email was successfully sent!', 'success')
+            return redirect(url_for('home'))
         
-        flash('Your message has been sent successfully!', 'success')
-        return redirect(url_for('home')) 
+        except Exception as e:
+            flash(f'An error occurred while sending your email: {str(e)}', 'error')
+            return redirect(url_for('contact'))
     
-    return render_template('contact.html', form=form)
+    return render_template('contact.html', form=form1)
