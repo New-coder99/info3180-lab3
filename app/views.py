@@ -74,11 +74,11 @@ def contact():
         try:
             msg = Message(subject,
                           sender=(name, email),
-                          recipients=["to@example.com"])
+                          recipients=["to@example.com"])  
             msg.body = message
             mail.send(msg)
             flash('Your email was successfully sent!', 'success')
-            return redirect(url_for('home'))
+            return redirect(url_for('/'))
         
         except Exception as e:
             flash(f'An error occurred while sending your email: {str(e)}', 'error')
