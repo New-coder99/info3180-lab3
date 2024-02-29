@@ -1,5 +1,8 @@
 from app import app
 from flask import render_template, request, redirect, url_for, flash
+from app import mail
+from app.forms import ContactForm 
+from flask_mail import Message
 
 
 ###
@@ -15,7 +18,7 @@ def home():
 @app.route('/about/')
 def about():
     """Render the website's about page."""
-    return render_template('about.html', name="Mary Jane")
+    return render_template('about.html', name="Jonoi Graham")
 
 
 ###
@@ -56,3 +59,21 @@ def add_header(response):
 def page_not_found(error):
     """Custom 404 page."""
     return render_template('404.html'), 404
+
+@app.route("/contact/", methods=['GET', 'POST'])
+def contact():
+    form = ContactForm()
+    if request.method == 'POST':
+        name = form.Name.data
+        email = form.Email.data
+        subject = form.Subject.data
+        message = form.Message.data
+
+        msg = Message(subject, sender=({name}, {email}), recipients=[{email}])
+        msg.body = f"Name: {name}\nEmail: {email}\nSubject: {subject}\nMessage: {message}"
+        mail.send(msg)
+        
+        flash('Your message has been sent successfully!', 'success')
+        return redirect(url_for('home')) 
+    
+    return render_template('contact.html', form=form)
